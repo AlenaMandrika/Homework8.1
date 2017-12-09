@@ -6,6 +6,7 @@ blockBtn.addEventListener('click', function (e) {
 
         var newDiv = document.createElement('div');
         newDiv.classList.add('block');
+
         var newBtn = document.createElement('button');
         newBtn.innerHTML = 'lorem';
         newBtn.classList.add('loremBtn');
@@ -19,7 +20,6 @@ blockBtn.addEventListener('click', function (e) {
         if (!activeClass) {
             elem.classList.add('active');
             var parent = elem.parentNode;
-            console.log(parent);
             var littleBtn = document.createElement('button');
             littleBtn.innerHTML = 'x';
             littleBtn.classList.add('littleBlock');
@@ -30,54 +30,47 @@ blockBtn.addEventListener('click', function (e) {
     if (elem && elem.className === 'littleBlock') {
         elem.parentNode.remove(elem)
     }
+
+}, false);
+
+
+blockBtn.addEventListener('mousedown', function (e) {
+    var elem = e.target;
+    dragableElem = true;
+    var coorNewDiv = elem.getBoundingClientRect();
+    console.log(coorNewDiv);
+
+    elem.style.top = coorNewDiv.top+'px';//початкові координати
+    elem.style.left = coorNewDiv.left+'px';
+
+
+
+
+}, false);
+
+blockBtn.addEventListener('mouseup', function (e) {
+    dragableElem = false;
+
 });
 
-var btn = document.querySelector('.newBtn');
-blockBtn.addEventListener('mousedown', mDown);
-blockBtn.addEventListener('mousedown', mUp);
-function mDown (e) {
+blockBtn.addEventListener('mousemove', function (e) {
+    var elem = e.target;
 
-        var elem = e.target;
-        var coor = getCoords(btn); //получаємо координати елемента
-        var shiftX = e.pageX - coor.left;
-        var shiftY = e.pageY - coor.top;
+    var x = e.clientX; //координата відносно вікна
+    var y = e.clientY;
+
+    //var maxWinX = document.getElementById('blockBtn').offsetWidth; //ширина контейнера
+    //var maxWinY = document.getElementById('blockBtn').offsetHeight;
+
+    var osx = e.offsetX;//зміщення по х курсора миші
+    var osy = e.offsetY;
+
+    elem.style.left = x - osx +'px';
+    elem.style.top = y - osy +'px';
 
 
-        btn.style.position = 'absolute';
-
-
-        function mMove(e) {
-            btn.style.left = e.pageX - btn.offsetWidth / 2 + 'px';
-            btn.style.top = e.pageY - btn.offsetHeight / 2 + 'px';
-        }
-
-        blockBtn.addEventListener('mousemove', function (e) {
-            mMove(e);
-        });
+}, false);
 
 
 
-        btn.addEventListener('mouseup', function () {
-            mUp(e)
-        });
-
-}
-
-function mUp(e) {
-    blockBtn.removeEventListener('mousemove', mMove);
-    btn.removeEventListener('mouseup', mUp);
-}
-
-
-btn.ondragstart = function() {
-    return false;
-};
-
-function getCoords(elem) {
-    var box = elem.getBoundingClientRect();
-    return {
-        top: box.top + pageYOffset,
-        left: box.left + pageXOffset
-    };
-}
 

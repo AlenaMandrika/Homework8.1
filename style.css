@@ -4,8 +4,11 @@
     width: 400px;
     border: 1px solid black;
 }
-.newBtn {
-    margin-left: -4px;
+.block {
+    display: inline-block;
+}
+.littleBlock {
+    margin: -1px;
 }
 img {
     position: absolute;
