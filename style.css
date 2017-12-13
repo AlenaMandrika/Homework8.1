@@ -1,14 +1,26 @@
 #blockBtn {
-    margin: 0 auto;
+    position: absolute;
     height: 400px;
     width: 400px;
     border: 1px solid black;
 }
 .block {
+    position: absolute;
     display: inline-block;
+
 }
 .littleBlock {
+    position: relative;
+    height: 30px;
     margin: -1px;
+    border-radius: 20%;
+    background-color: gold;
+}
+.loremBtn {
+    position: relative;
+    height: 30px;
+    border-radius: 20%;
+    background-color: gold;
 }
 img {
     position: absolute;
