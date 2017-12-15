@@ -5,7 +5,6 @@
 // clientHeight,clientWidth внутрішня висота/ширина елемента в пікселях
 
 var elem = false;
-var clientX, clientY;
 var blockBtn = document.getElementById('blockBtn');
 
 
@@ -48,23 +47,6 @@ blockBtn.addEventListener('mousedown', function (e) {
         elem = false;
     }
 
-    newDiv.addEventListener('touchstart', function(e) {
-        event.preventDefault();
-        elem = true;
-
-        e.offsetX = newDiv.offsetLeft - e.touches[0].clientX;
-        e.offsetY = newDiv.offsetTop - e.touches[0].clientY;
-        console.log('touches');
-
-        newDiv.addEventListener('touchmove', mMove, false);
-
-        newDiv.addEventListener('touchend', function () {
-            elem = false;
-        }, false);
-
-    }, false);
-
-
     newDiv.addEventListener('mousedown', function (e) {
         event.preventDefault();
         elem = true;
@@ -76,6 +58,23 @@ blockBtn.addEventListener('mousedown', function (e) {
 
         newDiv.addEventListener('mouseup', function () {
             elem = false;
+        }, false);
+
+
+        newDiv.addEventListener('touchstart', function(e) {
+
+            elem = true;
+
+            e.offsetX = newDiv.offsetLeft - e.touches[0].clientX;
+            e.offsetY = newDiv.offsetTop - e.touches[0].clientY;
+            console.log('touches');
+
+            newDiv.addEventListener('touchmove', mMove, false);
+
+            newDiv.addEventListener('touchend', function () {
+                elem = false;
+            }, false);
+
         }, false);
 
     }, false);
@@ -124,7 +123,6 @@ blockBtn.addEventListener('mousedown', function (e) {
     }
 
 }, false);
-
 
 
 
