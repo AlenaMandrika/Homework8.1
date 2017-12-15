@@ -5,7 +5,9 @@
 // clientHeight,clientWidth внутрішня висота/ширина елемента в пікселях
 
 var elem = false;
+var clientX, clientY;
 var blockBtn = document.getElementById('blockBtn');
+
 
 blockBtn.addEventListener('mousedown', function (e) {
     elem = e.target;
@@ -42,8 +44,26 @@ blockBtn.addEventListener('mousedown', function (e) {
     }
 
     if (elem && elem.className === 'littleBlock') {
-        elem.parentNode.remove(elem)
+        elem.parentNode.remove(elem);
+        elem = false;
     }
+
+    newDiv.addEventListener('touchstart', function(e) {
+        event.preventDefault();
+        elem = true;
+
+        e.offsetX = newDiv.offsetLeft - e.touches[0].clientX;
+        e.offsetY = newDiv.offsetTop - e.touches[0].clientY;
+        console.log('touches');
+
+        newDiv.addEventListener('touchmove', mMove, false);
+
+        newDiv.addEventListener('touchend', function () {
+            elem = false;
+        }, false);
+
+    }, false);
+
 
     newDiv.addEventListener('mousedown', function (e) {
         event.preventDefault();
@@ -52,41 +72,7 @@ blockBtn.addEventListener('mousedown', function (e) {
         e.offsetX = newDiv.offsetLeft - e.clientX;
         e.offsetY = newDiv.offsetTop - e.clientY;
 
-        newDiv.addEventListener('mousemove', function (e) {
-
-            var coorBlockBtn = blockBtn.getBoundingClientRect();
-            console.log(coorBlockBtn);
-            blockBtn.style.top = coorNewDiv.top + blockBtn.clientTop + 'px';
-            blockBtn.style.left = coorNewDiv.left + blockBtn.clientLeft + 'px';
-
-            var newCoordNewDiv = {
-                top: e.clientY - coorBlockBtn.top - newDiv.clientHeight / 2,
-                left: e.clientX - coorBlockBtn.left - newDiv.clientWidth / 2
-            };
-
-            if (elem) {
-                if (newCoordNewDiv.top < 0) { //верх
-                    newCoordNewDiv.top = 0;
-                }
-                if (newCoordNewDiv.left < 0) { //лівий
-                    newCoordNewDiv.left = 0;
-
-                    newDiv.children[1].style.float = 'right'
-                }
-                if (newCoordNewDiv.left + newDiv.clientWidth > blockBtn.clientWidth) { // правий
-                    newCoordNewDiv.left = blockBtn.clientWidth - newDiv.clientWidth;
-                    newDiv.children[1].style.float = 'left'
-                }
-                if (newCoordNewDiv.top + newDiv.clientHeight > blockBtn.clientHeight) { //низ
-                    newCoordNewDiv.top = blockBtn.clientHeight - newDiv.clientHeight;
-                }
-
-                newDiv.style.left = newCoordNewDiv.left + 'px'; //нові координати
-                newDiv.style.top = newCoordNewDiv.top + 'px';
-            }
-
-
-        }, false);
+        newDiv.addEventListener('mousemove', mMove, false);
 
         newDiv.addEventListener('mouseup', function () {
             elem = false;
@@ -95,7 +81,52 @@ blockBtn.addEventListener('mousedown', function (e) {
     }, false);
 
 
+    function mMove (e) {
+
+        var coorBlockBtn = blockBtn.getBoundingClientRect();
+        console.log(coorBlockBtn);
+        blockBtn.style.top = coorNewDiv.top + blockBtn.clientTop + 'px';
+        blockBtn.style.left = coorNewDiv.left + blockBtn.clientLeft + 'px';
+
+        if (e.type === 'touchmove') {
+            var newCoordNewDiv = {
+                top: e.changedTouches[0].clientY - coorBlockBtn.top - newDiv.clientHeight / 2,
+                left: e.changedTouches[0].clientX - coorBlockBtn.left - newDiv.clientWidth / 2
+            };
+
+        } else {
+            newCoordNewDiv = {
+                top: e.clientY - coorBlockBtn.top - newDiv.clientHeight / 2,
+                left: e.clientX - coorBlockBtn.left - newDiv.clientWidth / 2
+            };
+        }
+
+        if (elem) {
+            if (newCoordNewDiv.top < 0) { //верх
+                newCoordNewDiv.top = 0;
+            }
+            if (newCoordNewDiv.left < 0) { //лівий
+                newCoordNewDiv.left = 0;
+
+                newDiv.children[1].style.float = 'right'
+            }
+            if (newCoordNewDiv.left + newDiv.clientWidth > blockBtn.clientWidth) { // правий
+                newCoordNewDiv.left = blockBtn.clientWidth - newDiv.clientWidth;
+                newDiv.children[1].style.float = 'left'
+            }
+            if (newCoordNewDiv.top + newDiv.clientHeight > blockBtn.clientHeight) { //низ
+                newCoordNewDiv.top = blockBtn.clientHeight - newDiv.clientHeight;
+            }
+
+            newDiv.style.left = newCoordNewDiv.left + 'px'; //нові координати
+            newDiv.style.top = newCoordNewDiv.top + 'px';
+        }
+    }
+
 }, false);
+
+
+
 
 
 

@@ -6,7 +6,7 @@
 }
 .block {
     position: absolute;
-    display: inline-block;
+    display: inline-table;
 
 }
 .littleBlock {
