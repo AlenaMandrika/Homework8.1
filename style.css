@@ -34,5 +34,7 @@ img {
 }
 
 .left {
-    display: block;
+    display: inline-flex;
+    flex-direction: row-reverse;
+
 }

@@ -24,15 +24,15 @@ blockBtn.addEventListener('mousedown', function (e) {
     } else {
       topEl = e.clientY - blockBtn.offsetTop - 15;
     }
-    if (e.clientX - 20 < blockBtn.offsetLeft) {
+    if (e.clientX - 30 < blockBtn.offsetLeft) {
       leftEl = 5;
 
     } else if (e.clientX + 20 > blockBtn.offsetLeft + blockBtn.clientWidth) {
-      leftEl = blockBtn.clientWidth - 51;
+      leftEl = blockBtn.clientWidth - 65;
       tagEl.classList.add('left');
 
     } else {
-      leftEl = e.clientX  - blockBtn.offsetLeft - 20;
+      leftEl = e.clientX  - blockBtn.offsetLeft - 40;
     }
     var position = {
       left: leftEl,
@@ -78,8 +78,8 @@ blockBtn.addEventListener('mousedown', function (e) {
       littleBtn.classList.add('littleBlock');
       parent.insertBefore(littleBtn, null)
 
-    }
 
+    }
   }
 
   if (elem && elem.className === 'littleBlock') {
