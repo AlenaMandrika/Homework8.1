@@ -1,14 +1,18 @@
+body {
+    margin: 0;
+}
 #blockBtn {
     position: absolute;
     height: 400px;
     width: 400px;
     border: 1px solid black;
 }
+
 .block {
     position: absolute;
     display: inline-table;
-
 }
+
 .littleBlock {
     position: relative;
     height: 30px;
@@ -16,6 +20,7 @@
     border-radius: 20%;
     background-color: gold;
 }
+
 .loremBtn {
     position: relative;
     height: 30px;
@@ -28,6 +33,6 @@ img {
     z-index: -1;
 }
 
-
-
-
+.left {
+    display: block;
+}
